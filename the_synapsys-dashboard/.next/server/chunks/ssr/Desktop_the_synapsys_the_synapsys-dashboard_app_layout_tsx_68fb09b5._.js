@@ -1,0 +1,3 @@
+module.exports=[91357,a=>{"use strict";var b=a.i(63642);function c({children:a}){return(0,b.jsx)("html",{lang:"es",children:(0,b.jsx)("body",{children:a})})}a.s(["default",()=>c,"metadata",0,{title:"Synapsys Dashboard - EUDI Wallet RP",description:"Dashboard for managing EUDI Wallet verification sessions"}])}];
+
+//# sourceMappingURL=Desktop_the_synapsys_the_synapsys-dashboard_app_layout_tsx_68fb09b5._.js.map

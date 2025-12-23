@@ -1,0 +1,37 @@
+
+> the-synapsys-verifier@0.1.0 test
+> jest
+
+FAIL tests/integration/openid4vp.test.ts
+  ● Test suite failed to run
+
+    [96mtests/integration/openid4vp.test.ts[0m:[93m200[0m:[93m46[0m - [91merror[0m[90m TS2694: [0mNamespace '"/Users/rbm/Desktop/the_synapsys/the_synapsys-verifier/node_modules/jose/dist/types/index"' has no exported member 'KeyLike'.
+
+    [7m200[0m async function createMockVC(privateKey: jose.KeyLike): Promise<string> {
+    [7m   [0m [91m                                             ~~~~~~~[0m
+    [96mtests/integration/openid4vp.test.ts[0m:[93m232[0m:[93m20[0m - [91merror[0m[90m TS2694: [0mNamespace '"/Users/rbm/Desktop/the_synapsys/the_synapsys-verifier/node_modules/jose/dist/types/index"' has no exported member 'KeyLike'.
+
+    [7m232[0m   privateKey: jose.KeyLike,
+    [7m   [0m [91m                   ~~~~~~~[0m
+
+FAIL tests/health.test.ts
+  ● Test suite failed to run
+
+    [96msrc/routes/authorize.ts[0m:[93m33[0m:[93m7[0m - [91merror[0m[90m TS6133: [0m'scope' is declared but its value is never read.
+
+    [7m33[0m       scope,
+    [7m  [0m [91m      ~~~~~[0m
+    [96msrc/routes/authorize.ts[0m:[93m34[0m:[93m14[0m - [91merror[0m[90m TS6133: [0m'clientState' is declared but its value is never read.
+
+    [7m34[0m       state: clientState,
+    [7m  [0m [91m             ~~~~~~~~~~~[0m
+    [96msrc/routes/authorize.ts[0m:[93m35[0m:[93m14[0m - [91merror[0m[90m TS6133: [0m'clientNonce' is declared but its value is never read.
+
+    [7m35[0m       nonce: clientNonce,
+    [7m  [0m [91m             ~~~~~~~~~~~[0m
+
+Test Suites: 2 failed, 2 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        2.159 s
+Ran all test suites.

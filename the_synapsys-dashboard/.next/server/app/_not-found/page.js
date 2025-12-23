@@ -1,0 +1,13 @@
+var R=require("../../chunks/ssr/[turbopack]_runtime.js")("server/app/_not-found/page.js")
+R.c("server/chunks/ssr/Desktop_the_synapsys_the_synapsys-dashboard_047976ee._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__bd8a54cd._.js")
+R.c("server/chunks/ssr/fcf8c_next_dist_esm_build_templates_app-page_4cee74ea.js")
+R.c("server/chunks/ssr/[root-of-the-server]__328c6acf._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__1853bfa5._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__a92584b5._.js")
+R.c("server/chunks/ssr/Desktop_the_synapsys_the_synapsys-dashboard_app_layout_tsx_68fb09b5._.js")
+R.c("server/chunks/ssr/fcf8c_next_dist_client_components_b8515ed9._.js")
+R.c("server/chunks/ssr/fcf8c_next_dist_client_components_builtin_forbidden_80994ad5.js")
+R.c("server/chunks/ssr/107f3_synapsys-dashboard__next-internal_server_app__not-found_page_actions_fca6f5a7.js")
+R.m(1638)
+module.exports=R.m(1638).exports

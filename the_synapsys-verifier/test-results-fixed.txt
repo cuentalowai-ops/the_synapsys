@@ -1,0 +1,64 @@
+
+> the-synapsys-verifier@0.1.0 test
+> jest
+
+FAIL tests/integration/openid4vp.test.ts
+  ● Test suite failed to run
+
+    [96mtests/integration/openid4vp.test.ts[0m:[93m200[0m:[93m54[0m - [91merror[0m[90m TS2304: [0mCannot find name 'CryptoKey'.
+
+    [7m200[0m async function createMockVC(privateKey: Uint8Array | CryptoKey): Promise<string> {
+    [7m   [0m [91m                                                     ~~~~~~~~~[0m
+    [96mtests/integration/openid4vp.test.ts[0m:[93m232[0m:[93m28[0m - [91merror[0m[90m TS2304: [0mCannot find name 'CryptoKey'.
+
+    [7m232[0m   privateKey: Uint8Array | CryptoKey,
+    [7m   [0m [91m                           ~~~~~~~~~[0m
+
+FAIL tests/health.test.ts
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    /Users/rbm/Desktop/the_synapsys/the_synapsys-verifier/node_modules/jose/dist/webapi/index.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){export { compactDecrypt } from './jwe/compact/decrypt.js';
+                                                                                      ^^^^^^
+
+    SyntaxError: Unexpected token 'export'
+
+    > 1 | import * as jose from 'jose';
+        | ^
+      2 | import { logger } from '../config/logger';
+      3 |
+      4 | /**
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1505:14)
+      at Object.<anonymous> (src/lib/jwt.ts:1:1)
+      at Object.<anonymous> (src/routes/directPost.ts:13:1)
+      at Object.<anonymous> (src/index.ts:23:1)
+      at Object.<anonymous> (tests/health.test.ts:9:1)
+
+Test Suites: 2 failed, 2 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        2.22 s
+Ran all test suites.
