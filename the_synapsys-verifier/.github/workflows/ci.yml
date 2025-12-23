@@ -1,48 +1,78 @@
-name: CI
+name: CI - Backend Verifier
 
 on:
   push:
     branches: [main, develop]
+    paths:
+      - 'the_synapsys-verifier/**'
+      - '.github/workflows/ci-verifier.yml'
   pull_request:
     branches: [main, develop]
+    paths:
+      - 'the_synapsys-verifier/**'
+
+env:
+  NODE_VERSION: '20.x'
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        node-version: [20.x]
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: synapsys_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
+          cache-dependency-path: 'the_synapsys-verifier/package-lock.json'
       
       - name: Install dependencies
+        working-directory: the_synapsys-verifier
         run: npm ci
       
       - name: Run linter
+        working-directory: the_synapsys-verifier
         run: npm run lint
       
       - name: Check code formatting
+        working-directory: the_synapsys-verifier
         run: npm run format:check
       
-      - name: Run tests
-        run: npm test
-      
       - name: Build project
+        working-directory: the_synapsys-verifier
         run: npm run build
+      
+      - name: Run tests
+        working-directory: the_synapsys-verifier
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/synapsys_test
+          NODE_ENV: test
+          JWT_SECRET: test-secret-key-for-ci-testing-minimum-32-characters
+          ENCRYPTION_KEY: test-encryption-key-for-ci-testing-32-chars
+        run: npm test -- --coverage
       
       - name: Upload coverage reports
         if: success()
         uses: codecov/codecov-action@v3
         with:
-          files: ./coverage/lcov.info
+          files: the_synapsys-verifier/coverage/lcov.info
           flags: unittests
-          name: codecov-umbrella
+          name: codecov-verifier

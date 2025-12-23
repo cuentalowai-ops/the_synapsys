@@ -7,12 +7,14 @@ module.exports = {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
-  plugins: ['@typescript-eslint'],
+  ignorePatterns: ['*.cjs', 'dist', 'node_modules', 'coverage'],
+  plugins: ['@typescript-eslint', 'import'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'airbnb-typescript/base',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     'prettier',
   ],
   env: {
@@ -20,12 +22,24 @@ module.exports = {
     es2022: true,
     jest: true,
   },
+  settings: {
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+        project: './tsconfig.json',
+      },
+      node: true,
+    },
+  },
   rules: {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-floating-promises': 'error',
+    '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true, allowBoolean: true, allowNullish: true }],
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'import/prefer-default-export': 'off',
+    'import/extensions': ['error', 'ignorePackages', { ts: 'never', js: 'never' }],
   },
 };
