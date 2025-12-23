@@ -60,9 +60,11 @@ jobs:
           EOFMD
           
           # Capture report content for webhook notification
-          echo "content<<EOF" >> $GITHUB_OUTPUT
-          cat COMPLIANCE_STATUS.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          {
+            echo "content<<EOF"
+            cat COMPLIANCE_STATUS.md
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
       - name: 🚨 Alert on Non-Compliance
         if: contains(steps.generate_report.outputs.content, 'NON_COMPLIANT')
@@ -70,29 +72,41 @@ jobs:
           if [ -n "${{ secrets.WEBHOOK_URL }}" ]; then
             echo "🚨 NON_COMPLIANT status detected! Triggering Active Defense..."
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
-            PAYLOAD=$(cat <<EOF
+            
+            # Build JSON payload
+            cat > /tmp/payload.json <<'EOFJSON'
           {
             "status": "NON_COMPLIANT",
-            "timestamp": "$TIMESTAMP",
+            "timestamp": "TIMESTAMP_PLACEHOLDER",
             "repository": "cuentalowai-ops/the_synapsys",
             "branch": "main",
             "dashboard_url": "https://dashboard.synapsys.local",
-            "commit_sha": "${{ github.sha }}",
-            "actor": "${{ github.actor }}",
+            "commit_sha": "SHA_PLACEHOLDER",
+            "actor": "ACTOR_PLACEHOLDER",
             "severity": "CRITICAL",
             "action_required": "Inspect compliance status immediately at the dashboard",
-            "workflow_run": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            "workflow_run": "WORKFLOW_URL_PLACEHOLDER"
           }
-          EOF
-            )
+          EOFJSON
+            
+            # Replace placeholders
+            sed -i "s|TIMESTAMP_PLACEHOLDER|$TIMESTAMP|g" /tmp/payload.json
+            sed -i "s|SHA_PLACEHOLDER|${{ github.sha }}|g" /tmp/payload.json
+            sed -i "s|ACTOR_PLACEHOLDER|${{ github.actor }}|g" /tmp/payload.json
+            sed -i "s|WORKFLOW_URL_PLACEHOLDER|${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|g" /tmp/payload.json
+            
+            # Send webhook
             curl -X POST "${{ secrets.WEBHOOK_URL }}" \
               -H "Content-Type: application/json" \
-              -d "$PAYLOAD" \
+              -d @/tmp/payload.json \
               --max-time 10 \
               --silent \
               --show-error \
               && echo "✅ Active Defense notification sent successfully" \
               || echo "⚠️ Webhook delivery may have failed, but compliance check continues"
+            
+            # Cleanup
+            rm -f /tmp/payload.json
           else
             echo "ℹ️ WEBHOOK_URL not configured. Skipping Active Defense notification."
             echo "💡 Configure WEBHOOK_URL secret in GitHub Settings to enable real-time alerts."
