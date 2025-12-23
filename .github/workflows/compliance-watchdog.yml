@@ -15,11 +15,18 @@ jobs:
       actions: read
     
     steps:
+
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+                - name: 📂 Ensure src directory exists
+        run: |
+          mkdir -p src
+          echo "✅ src directory ready"
+        continue-on-error: true
 
       - name: 🔬 Scan for Hardcoded Secrets (ISO 27001 A.8.24)
         run: |
