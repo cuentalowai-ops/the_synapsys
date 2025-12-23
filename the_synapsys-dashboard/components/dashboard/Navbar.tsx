@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/lib/hooks/useAuth';
 import { LogOut } from 'lucide-react';
+import ComplianceStatus from './ComplianceStatus';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -16,13 +17,17 @@ export default function Navbar() {
           <p className="text-sm text-gray-500">{user?.name}</p>
         </div>
 
-        <button
-          onClick={logout}
-          className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-        >
-          <LogOut className="w-4 h-4" />
-          Logout
-        </button>
+        <div className="flex items-center gap-4">
+          <ComplianceStatus />
+          
+          <button
+            onClick={logout}
+            className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
+          </button>
+        </div>
       </div>
     </nav>
   );
