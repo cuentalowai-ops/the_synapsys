@@ -68,7 +68,7 @@ jobs:
           cat > COMPLIANCE_STATUS.md << 'EOFMD'
 # 🛡️ SYNAPSYS COMPLIANCE REPORT
 
-**Generated:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')  
+Generated: $(date -u '+%%Y-%%m-%%d %%H:%%M:%%S UTC')
 **Status:** 🟢 OPERATIONAL  
 **Run ID:** ${{ github.run_id }}  
 **Commit:** ${{ github.sha }}  
