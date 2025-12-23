@@ -4,7 +4,7 @@
 - **Scope:** Backend, security, data handling and wallet verification flows.
 
 ## Current Status
-- ✅ CI pipeline: Operational
+- ❌ CI pipeline: NON_COMPLIANT
 - ✅ Compliance watchdog: Active for main branch
 - ✅ Auto-commit of compliance reports: Enabled
 
